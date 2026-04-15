@@ -31,7 +31,7 @@ public class ConfigManager {
 		InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 		
 		if(input == null) {
-			throw new RuntimeException("Cannpt find file on given path --> "+path);
+			throw new RuntimeException("Cannot find file on given path --> "+path);
 		}
 		
 		
