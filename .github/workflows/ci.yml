@@ -5,6 +5,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  schedule: # Set the CRON for MIDNIGHT IST
+    - cron: "30 17 * * *"
 
 jobs:
   test:
@@ -20,6 +22,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Execute Test Automation Framework
-      run: mvn clean test -DsuiteXmlFile=testng.xml -Denv=dev
+      run: mvn clean test -DsuiteXmlFile=testng.xml -Denv="${{ github.event.inputs.env }}"
+
+    - name: Upload a Build Artifact
+      if: always()
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: SureFire Report
+        path: target/surefire-reports/
+        retention-days: 10
 
    
